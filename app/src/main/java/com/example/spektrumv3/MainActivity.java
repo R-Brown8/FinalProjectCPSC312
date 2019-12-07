@@ -23,7 +23,6 @@ import java.util.ArrayList;
 // database image deletion
 // color analyze cleanup
         //
-// image resizing ( crashes if bitmap too large )
 // once cleaned up potentially add Flickr API functionality of random "interesting" image
 //      or Google API fragment in place of color grid (fragment)
 
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sqlDb.deleteAll();
-                updateRecycleView();
+                updateRecycleView();                    //add alert dialog for deleting database
             }
         });
     }
@@ -142,8 +141,6 @@ public class MainActivity extends AppCompatActivity {
         Bitmap returnValue = null;
         try{
             returnValue = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-//            returnValue.setWidth(256);
-//            returnValue.setHeight(256);
         } catch (Exception e) { }
         return returnValue;
     }
