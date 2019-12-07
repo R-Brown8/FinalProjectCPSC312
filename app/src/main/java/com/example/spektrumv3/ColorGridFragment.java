@@ -65,7 +65,7 @@ public class ColorGridFragment extends Fragment {
                 int mutedDark = palette.getDarkMutedColor(defaultValue);
 
                 if(color1GridFragment != null) {
-                    color1GridFragment.setBackgroundColor(vibrant);
+                    color1GridFragment.setBackgroundColor(vibrantLight);
                     color2GridFragment.setBackgroundColor(dominant);
                     color3GridFragment.setBackgroundColor(muted);
 //                    color4GridFragment.setBackgroundColor(muted);
