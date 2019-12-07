@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         analyzeButtonListener();
         listButtonListener();
         clearButtonListener();
-
         sqlDb = new SqlImageDatabase(this);
        selectedImageView = (ImageView) findViewById(R.id.analyzeImageView);
        imageRecycler = (RecyclerView) findViewById(R.id.recyclerListView);

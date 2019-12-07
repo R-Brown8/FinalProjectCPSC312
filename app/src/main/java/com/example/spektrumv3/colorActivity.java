@@ -29,8 +29,6 @@ public class colorActivity extends AppCompatActivity {
     ColorGridFragment colorGridFragment;
     VisionAPIFragment visionAPIFragment;
 
-
-
     Uri myURI;
 
     List swatchList = null;
