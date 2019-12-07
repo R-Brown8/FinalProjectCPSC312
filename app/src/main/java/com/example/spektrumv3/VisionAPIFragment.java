@@ -53,7 +53,7 @@ public class VisionAPIFragment extends Fragment {
 
     public void updateText(String text){
         TextView textView = (TextView) getView().findViewById(R.id.infoTextView);
-        textView.setText("hello again");
+        textView.setText(text);
     }
 
     public void analyzeImageForLabels(Bitmap bitmap){
@@ -126,6 +126,9 @@ public class VisionAPIFragment extends Fragment {
                     @Override
                     public void onSuccess(List<FirebaseVisionFace> firebaseVisionFaces) {
                         Log.d(TAG, "onSuccess: # of faces: " + firebaseVisionFaces.size());
+                        if(firebaseVisionFaces.size() == 1){
+                            updateText("There is: " + firebaseVisionFaces.size() + " face.");
+                        }
                         updateText("There are: " + firebaseVisionFaces.size() + " faces.");
                         //image was scanned successfully
                         for(FirebaseVisionFace face : firebaseVisionFaces){
