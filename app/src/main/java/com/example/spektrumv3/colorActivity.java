@@ -57,6 +57,7 @@ public class colorActivity extends AppCompatActivity {
 
 
         colorGridFragment.paintTextBackground(uriToBitmap(myURI));
+        visionAPIFragment.analyzeImageForLabels(uriToBitmap(myURI));
     }
 
     private void initViews() {

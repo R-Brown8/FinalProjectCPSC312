@@ -1,5 +1,6 @@
 package com.example.spektrumv3;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,4 +25,10 @@ public class VisionAPIFragment extends Fragment {
         TextView textView = (TextView) getView().findViewById(R.id.infoTextView);
         textView.setText("hello again");
     }
+
+    public void analyzeImageForLabels(Bitmap bitmap){
+
+    }
+
+
 }
