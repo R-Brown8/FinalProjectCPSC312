@@ -34,4 +34,13 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'com.android.support:design'
 
+    //added for firebase functionality
+    implementation 'com.google.firebase:firebase-ml-vision:24.0.1'
+    implementation 'com.google.firebase:firebase-ml-vision-image-label-model:19.0.0'
+    implementation 'com.google.firebase:firebase-analytics:17.2.1'
+    implementation 'com.google.api-client:google-api-client-android:1.22.0'
+    implementation 'com.google.apis:google-api-services-vision:v1-rev357-1.22.0'
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
 }
+
+apply plugin: 'com.google.gms.google-services'
