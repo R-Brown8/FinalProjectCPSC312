@@ -18,9 +18,7 @@ import java.util.List;
 
 
 public class colorActivity extends AppCompatActivity {
-
     String TAG = "ColorActivity";
-
 
     private ImageView selectedImage;
     private Uri selectedImageURI;
@@ -56,7 +54,11 @@ public class colorActivity extends AppCompatActivity {
 
 
         colorGridFragment.paintTextBackground(uriToBitmap(myURI));
+
+
         visionAPIFragment.analyzeImageForLabels(uriToBitmap(myURI));
+        visionAPIFragment.analyzeImageForLandmark(uriToBitmap(myURI));
+        visionAPIFragment.analyzeImageForFaces(uriToBitmap(myURI));
     }
 
     private void initViews() {

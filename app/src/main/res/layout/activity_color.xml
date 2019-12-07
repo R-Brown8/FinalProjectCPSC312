@@ -36,7 +36,7 @@
         android:id="@+id/switchButton"
         android:layout_width="179dp"
         android:layout_height="149dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="52dp"
         android:text="Show Image Info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
