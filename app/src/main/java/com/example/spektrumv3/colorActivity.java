@@ -24,7 +24,6 @@ public class colorActivity extends AppCompatActivity {
 
     private ImageView selectedImage;
     private Uri selectedImageURI;
-    Boolean showInfo;
     Switch switchButton;
     ColorGridFragment colorGridFragment;
     VisionAPIFragment visionAPIFragment;
