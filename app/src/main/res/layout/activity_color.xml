@@ -21,26 +21,16 @@
 
     <ImageView
         android:id="@+id/analyzeImageView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="414dp"
+        android:layout_height="271dp"
+        android:layout_marginTop="32dp"
         android:layout_marginBottom="136dp"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/colorGridFragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/visionApiFragment"
+        app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
-
-    <fragment
-        android:id="@+id/colorGridFragment"
-        android:name="com.example.spektrumv3.ColorGridFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="139dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/analyzeImageView" />
 
     <Switch
         android:id="@+id/switchButton"
@@ -53,15 +43,25 @@
         app:layout_constraintTop_toBottomOf="@+id/analyzeImageView" />
 
     <fragment
+        android:id="@+id/colorGridFragment"
+        android:name="com.example.spektrumv3.ColorGridFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/visionApiFragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/analyzeImageView" />
+
+    <fragment
         android:id="@+id/visionApiFragment"
         android:name="com.example.spektrumv3.VisionAPIFragment"
-        android:layout_width="167dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginBottom="17dp"
-        app:layout_constraintBottom_toTopOf="@+id/analyzeImageView"
-        app:layout_constraintStart_toStartOf="@+id/titleTextView"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colorGridFragment" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

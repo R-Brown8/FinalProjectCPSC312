@@ -22,8 +22,8 @@ public class ColorGridFragment extends Fragment {
     TextView color1GridFragment;
     TextView color2GridFragment;
     TextView color3GridFragment;
-    TextView color4GridFragment;
-    TextView color5GridFragment;
+//    TextView color4GridFragment;
+//    TextView color5GridFragment;
 
 
     @Nullable
@@ -33,8 +33,8 @@ public class ColorGridFragment extends Fragment {
         color1GridFragment = (TextView) v.findViewById(R.id.fragColorTextView1);
         color2GridFragment = (TextView) v.findViewById(R.id.fragColorTextView2);
         color3GridFragment = (TextView) v.findViewById(R.id.fragColorTextView3);
-        color4GridFragment = (TextView) v.findViewById(R.id.fragColorTextView4);
-        color5GridFragment = (TextView) v.findViewById(R.id.fragColorTextView5);
+//        color4GridFragment = (TextView) v.findViewById(R.id.fragColorTextView4);
+//        color5GridFragment = (TextView) v.findViewById(R.id.fragColorTextView5);
 
         Log.d("colorGridFrag", "post-init: " + color1GridFragment);
         return v;
@@ -51,20 +51,6 @@ public class ColorGridFragment extends Fragment {
                 //work with the palette here
 
                 int defaultValue = 0x000000;
-//                swatchList = palette.getSwatches();    //gets 16 colors
-
-
-//                Object popularColor = getMostPopulousSwatch(palette);
-//
-//                Object color = swatchList.get(0);
-//                Object color1 = swatchList.get(1);
-//                Object color2 = swatchList.get(2);
-//
-//
-//                Log.d(TAG, "popularSwatch: " + popularColor);
-//                Log.d(TAG, "swatch1: " + color);
-//                Log.d(TAG, "swatch2: " + color1);
-//                Log.d(TAG, "swatch3: " + color2);
 
                 Palette.Swatch mostPopularColor = getMostPopulousSwatch(palette);
                 Palette.Swatch dominantColor = palette.getDominantSwatch();
@@ -80,10 +66,10 @@ public class ColorGridFragment extends Fragment {
 
                 if(color1GridFragment != null) {
                     color1GridFragment.setBackgroundColor(vibrant);
-                    color2GridFragment.setBackgroundColor(vibrantLight);
-                    color3GridFragment.setBackgroundColor(vibrantDark);
-                    color4GridFragment.setBackgroundColor(muted);
-                    color5GridFragment.setBackgroundColor(mutedDark);
+                    color2GridFragment.setBackgroundColor(dominant);
+                    color3GridFragment.setBackgroundColor(muted);
+//                    color4GridFragment.setBackgroundColor(muted);
+//                    color5GridFragment.setBackgroundColor(mutedDark);
                 }
 //
             }
