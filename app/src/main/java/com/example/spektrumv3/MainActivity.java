@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         Log.d(TAG, "onActivityResult: before if statement");
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             selectedImage = data.getData();
             Uri uri = (Uri) data.getData();
             Log.d(TAG, "newURI: " + selectedImage);
@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
             selectedImageView.setImageBitmap(bitmap);
 
             sqlDb.insertImage( uri.toString() );
+
 
             updateRecycleView();
             toggleFragments(false);
