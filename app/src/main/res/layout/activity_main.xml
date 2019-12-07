@@ -10,11 +10,16 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="411dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="31dp"
         android:gravity="center_horizontal"
         android:text="SPEKTRUM"
-        android:textSize="36sp" />
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/listViewFragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!--    <TextView-->
     <!--        android:id="@+id/uploadImageText"-->
@@ -30,25 +35,36 @@
     <fragment
         android:id="@+id/imageDisplayFragment"
         android:name="com.example.spektrumv3.ImageDisplayFragment"
-        android:layout_width="259dp"
-        android:layout_height="218dp"
-        tools:layout_editor_absoluteX="59dp"
-        tools:layout_editor_absoluteY="94dp" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listViewFragment" />
 
     <fragment
         android:id="@+id/listViewFragment"
         android:name="com.example.spektrumv3.ImageListViewFragment"
-        android:layout_width="224dp"
-        android:layout_height="192dp"
-        tools:layout_editor_absoluteX="61dp"
-        tools:layout_editor_absoluteY="225dp" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageDisplayFragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="411dp"
-        android:layout_height="102dp"
+        android:layout_height="107dp"
+        android:layout_marginBottom="1dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteY="500dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageDisplayFragment">
 
         <ImageButton
             android:id="@+id/uploadButton"
