@@ -42,7 +42,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
 
         Log.d("ImageAdapter","onBindViewHolder");
         final String uri = nameList.get(position);
-        Uri myUri = Uri.parse(uri);
+        final Uri myUri = Uri.parse(uri);
 
         try {
             final Bitmap bm = MediaStore.Images.Media.getBitmap(this.context.getContentResolver(), myUri);
@@ -55,6 +55,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
                     ImageView iv = context.findViewById(R.id.analyzeImageView);
                     iv.setImageBitmap(bm);
                     ((MainActivity) context).toggleFragments(false);
+                    ((MainActivity) context).setSelectedImage(myUri);
                     //on image click in list, set selectedImageURI passed by intent to be updated
                 }
             });
@@ -64,6 +65,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
 
 
     }
+
 
     @Override
     public int getItemCount() {

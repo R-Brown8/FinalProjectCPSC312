@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     Button listButton;
     ImageView selectedImageView;
     Button analyzeButton;
+    Button clearButton;
     RecyclerView imageRecycler;
     ImageDisplayFragment displayFragment  = (ImageDisplayFragment) getSupportFragmentManager().findFragmentById(R.id.imageDisplayFragment);
     ImageListViewFragment listViewFragment  = (ImageListViewFragment) getSupportFragmentManager().findFragmentById(R.id.listViewFragment);
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         uploadButtonListener();
         analyzeButtonListener();
         listButtonListener();
+        clearButtonListener();
 
         sqlDb = new SqlImageDatabase(this);
        selectedImageView = (ImageView) findViewById(R.id.analyzeImageView);
@@ -70,6 +72,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void clearButtonListener() {
+        clearButton = (Button) findViewById(R.id.clearButton);
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sqlDb.deleteAll();
+                updateRecycleView();
+            }
+        });
+    }
 
     public void uploadButtonListener() {
         uploadButton = (ImageButton) findViewById(R.id.uploadButton);
@@ -120,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
             selectedImageView.setImageBitmap(bitmap);
 
             sqlDb.insertImage( uri.toString() );
+
+
+            updateRecycleView();
+            toggleFragments(false);
         }
     }
 
@@ -127,8 +143,8 @@ public class MainActivity extends AppCompatActivity {
         Bitmap returnValue = null;
         try{
             returnValue = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-            returnValue.setWidth(256);
-            returnValue.setHeight(256);
+//            returnValue.setWidth(256);
+//            returnValue.setHeight(256);
         } catch (Exception e) { }
         return returnValue;
     }
@@ -152,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
             do {
                 String data = c.getString(c.getColumnIndex("uri"));
                 list.add(data);
-//                Log.d(TAG, "data received: " + data);
+                Log.d(TAG, "data received: " + data);
             } while (c.moveToNext());
         }
         c.close(); //always close cursor
@@ -160,6 +176,10 @@ public class MainActivity extends AppCompatActivity {
         imageRecycler.setAdapter(myAdapter);
     }
 
+    public void setSelectedImage(Uri uri) {
+        selectedImage = uri;
+
+    }
 
     public void toggleFragments(boolean showList){
         if (showList) {
