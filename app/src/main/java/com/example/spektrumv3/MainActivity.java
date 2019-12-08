@@ -1,11 +1,13 @@
 package com.example.spektrumv3;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -13,10 +15,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -75,8 +79,30 @@ public class MainActivity extends AppCompatActivity {
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sqlDb.deleteAll();
-                updateRecycleView();                    //add alert dialog for deleting database
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+// Add the buttons
+                builder.setTitle("Are you sure you want to clear the saved images?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked Yes button
+                        sqlDb.deleteAll();
+                        updateRecycleView();
+                        Toast toast = Toast.makeText(MainActivity.this, "Cleared Saved Images", Toast.LENGTH_LONG );
+                        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+                        toast.show();
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+
+// Create the AlertDialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
     }
@@ -105,6 +131,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Log.d(TAG, "listButtonListener: ");
+
+                Toast toast = Toast.makeText(MainActivity.this, "Showing saved images list", Toast.LENGTH_LONG );
+                toast.setGravity(Gravity.CENTER|Gravity.BOTTOM, 0, 325);
+                toast.show();
+
+                analyzeButton.setEnabled(false);
 
                 toggleFragments(true);
             }
@@ -186,6 +218,8 @@ public class MainActivity extends AppCompatActivity {
             fm.beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                     .show(listViewFragment).commit();
 
+            analyzeButton.setEnabled(false);
+
         } else {
 
             FragmentManager fm = getSupportFragmentManager();
@@ -194,6 +228,8 @@ public class MainActivity extends AppCompatActivity {
 
             fm.beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                     .hide(listViewFragment).commit();
+
+            analyzeButton.setEnabled(true);
         }
     }
 }

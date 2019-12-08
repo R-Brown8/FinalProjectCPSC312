@@ -5,10 +5,12 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,6 +45,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
         Log.d("ImageAdapter","onBindViewHolder");
         final String uri = nameList.get(position);
         final Uri myUri = Uri.parse(uri);
+        final Activity ctxt = this.context;
 
         try {
             final Bitmap bm = MediaStore.Images.Media.getBitmap(this.context.getContentResolver(), myUri);
@@ -54,6 +57,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.MyViewHolder
                 public void onClick(View v) {
                     ImageView iv = context.findViewById(R.id.analyzeImageView);
                     iv.setImageBitmap(bm);
+                    Toast toast = Toast.makeText(ctxt, "Showing selected image", Toast.LENGTH_LONG );
+                    toast.setGravity(Gravity.CENTER|Gravity.BOTTOM, 0, 325);
+                    toast.show();
+
                     ((MainActivity) context).toggleFragments(false);
                     ((MainActivity) context).setSelectedImage(myUri);
                     //on image click in list, set selectedImageURI passed by intent to be updated

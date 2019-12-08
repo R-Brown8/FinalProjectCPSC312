@@ -32,8 +32,6 @@ public class colorActivity extends AppCompatActivity {
 
     Uri myURI;
 
-    List swatchList = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
