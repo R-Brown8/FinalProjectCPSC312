@@ -85,7 +85,8 @@ public class ColorGridFragment extends Fragment {
                     color1GridFragment.setBackgroundColor(colorSet.get(1));
                     color2GridFragment.setBackgroundColor(colorSet.get(2));
                     color3GridFragment.setBackgroundColor(colorSet.get(3));
-                }
+                }else
+                    color2GridFragment.setBackgroundColor(dominant);
             }
         });
     }
