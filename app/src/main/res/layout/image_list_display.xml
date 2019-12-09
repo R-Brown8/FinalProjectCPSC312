@@ -8,4 +8,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <TextView
+        android:id="@+id/emptyTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="No saved images"
+        android:textColor="?attr/editTextColor"
+        android:textSize="24sp" />
+
 </LinearLayout>

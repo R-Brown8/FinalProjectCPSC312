@@ -149,26 +149,36 @@ public class MainActivity extends AppCompatActivity {
     public static final int RESULT_LOAD_IMAGE = 1;
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
 
         Log.d(TAG, "onActivityResult: before if statement");
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
-            selectedImage = data.getData();
-            Uri uri = (Uri) data.getData();
-            Log.d(TAG, "newURI: " + selectedImage);
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
+                    selectedImage = data.getData();
+                    Uri uri = (Uri) data.getData();
+                    Log.d(TAG, "newURI: " + selectedImage);
 
-            Bitmap bitmap = uriToBitmap(data.getData());
-
-            selectedImageView.setImageBitmap(bitmap);
-
-            sqlDb.insertImage( uri.toString() );
+                    final Bitmap bitmap = uriToBitmap(data.getData());
 
 
-            updateRecycleView();
-            toggleFragments(false);
-        }
+                    sqlDb.insertImage(uri.toString());
+
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            selectedImageView.setImageBitmap(bitmap);
+
+                            updateRecycleView();
+
+                            toggleFragments(false);
+                        }
+                    });
+                }
+            }
+        });
+        thread.start();
     }
 
     private Bitmap uriToBitmap(Uri uri) {
@@ -194,6 +204,12 @@ public class MainActivity extends AppCompatActivity {
     public void updateRecycleView() {
         ArrayList<String> list = new ArrayList<>();
         Cursor c = sqlDb.getImageList(); //returns a cursor
+        if(c.getCount() == 0){
+            listViewFragment.toggleListView(false);
+        } else {
+            listViewFragment.toggleListView(true);
+        }
+
         if (c.moveToFirst()) {
             do {
                 String data = c.getString(c.getColumnIndex("uri"));
