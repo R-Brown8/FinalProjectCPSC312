@@ -49,14 +49,11 @@ import java.util.List;
 
 public class colorActivity extends AppCompatActivity {
     String TAG = "ColorActivity";
-
     private ImageView selectedImage;
-    //private Uri selectedImageURI;
-    ColorGridFragment colorGridFragment;
+    private ColorGridFragment colorGridFragment;
     private List<ImageLabel> labelList;
     private ProgressBar progressBar;
     private TextView textView;
-    private Spinner spinner;
     private Uri myURI;
     private TextView color1GridFragment;
     private TextView color2GridFragment;
@@ -80,7 +77,6 @@ public class colorActivity extends AppCompatActivity {
         String uriString = intent.getStringExtra("selectedImageURI");
 
         myURI = Uri.parse(uriString);
-        selectedImage = findViewById(R.id.analyzeImageView);
         selectedImage.setImageURI(myURI);
 
         //show the fragment that will display our information
@@ -91,7 +87,7 @@ public class colorActivity extends AppCompatActivity {
 
         //we want to use a spinner and add the options to it
         String[] spinnerOptions = {"Colors", "Labels", "Landmarks", "Faces", "Text", "Hot Dog?"};
-        spinner = findViewById(R.id.spinnerOptions);
+        Spinner spinner = findViewById(R.id.spinnerOptions);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_spinner_dropdown_item,
@@ -101,10 +97,9 @@ public class colorActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position,  final long id) {
-                if(id == 0) {
+                if(id == 0){
                     setTextVisible(false);
-                }
-                else if(id == 1) {
+                }else if(id == 1) {
                     setTextVisible(false);
                     toggleProgressBar(true);
                     analyzeImageForLabels(uriToBitmap(myURI));
@@ -156,6 +151,7 @@ public class colorActivity extends AppCompatActivity {
         colorGridFragment  = (ColorGridFragment) getSupportFragmentManager().findFragmentById(R.id.colorGridFragment);
         textView = findViewById(R.id.textView);
         progressBar = findViewById(R.id.progressBar);
+        selectedImage = findViewById(R.id.analyzeImageView);
         color1GridFragment = findViewById(R.id.fragColorTextView1);
         color2GridFragment = findViewById(R.id.fragColorTextView2);
         color3GridFragment = findViewById(R.id.fragColorTextView3);
