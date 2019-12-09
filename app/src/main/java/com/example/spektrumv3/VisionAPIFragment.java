@@ -197,11 +197,16 @@ public class VisionAPIFragment extends Fragment {
                             landmarkList.add(label);
                         }
                         Log.d(TAG, "onSuccess: landmarks: " + landmarkList);
-                        String locationString = "I am " + new DecimalFormat("#0.00%").format(landmarkList.get(0).confidence)
-                                + " confident this is the  \n"
-                                + landmarkList.get(0).label;
+                        String landmarkString = "";
+                        if(!landmarkList.isEmpty()) {
+                            landmarkString = "I am " + new DecimalFormat("#0.00%").format(landmarkList.get(0).confidence)
+                                    + " confident this is the  \n"
+                                    + landmarkList.get(0).label;
+                        }else{
+                            landmarkString = "I do not recognize this landmark.";
+                        }
 
-                        updateText(locationString);
+                        updateText(landmarkString);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -247,7 +252,7 @@ public class VisionAPIFragment extends Fragment {
                     new AlertDialog.Builder(getActivity())
                             .setTitle("YAHOO!")
                             .setMessage("YOU FOUND A HOT DOG! CONGRATULATIONS!")
-                            .setNeutralButton("Heck Yeah", null)
+                            .setNeutralButton("Sweet", null)
                             .show();
 
                     updateText("It appears to be a hot dog.");
