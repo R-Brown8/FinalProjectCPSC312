@@ -22,7 +22,8 @@
         android:layout_columnWeight="1"
         android:layout_marginStart="3dp"
         android:layout_marginEnd="3dp"
-        android:layout_marginBottom="3dp" />
+        android:layout_marginBottom="3dp"
+        android:visibility="visible" />
 
     <TextView
         android:id="@+id/fragColorTextView3"
@@ -30,6 +31,26 @@
         android:layout_height="match_parent"
         android:layout_row="0"
         android:layout_column="2"
+        android:layout_columnWeight="1"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp" />
+
+    <TextView
+        android:id="@+id/fragColorTextView4"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_row="0"
+        android:layout_column="3"
+        android:layout_columnWeight="1"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp" />
+
+    <TextView
+        android:id="@+id/fragColorTextView5"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_row="0"
+        android:layout_column="4"
         android:layout_columnWeight="1"
         android:layout_marginEnd="3dp"
         android:layout_marginBottom="3dp" />

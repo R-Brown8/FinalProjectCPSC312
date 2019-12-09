@@ -21,11 +21,11 @@ import java.util.List;
 public class ColorGridFragment extends Fragment {
     static final String TAG = "ColorGridFragment";
 
-    TextView color1GridFragment;
-    TextView color2GridFragment;
-    TextView color3GridFragment;
-//    TextView color4GridFragment;
-//    TextView color5GridFragment;
+    private TextView color1GridFragment;
+    private TextView color2GridFragment;
+    private TextView color3GridFragment;
+    private TextView color4GridFragment;
+    private TextView color5GridFragment;
 
 
     @Nullable
@@ -35,6 +35,8 @@ public class ColorGridFragment extends Fragment {
         color1GridFragment = v.findViewById(R.id.fragColorTextView1);
         color2GridFragment = v.findViewById(R.id.fragColorTextView2);
         color3GridFragment = v.findViewById(R.id.fragColorTextView3);
+        color4GridFragment = v.findViewById(R.id.fragColorTextView4);
+        color5GridFragment = v.findViewById(R.id.fragColorTextView5);
 
 
         Log.d("colorGridFrag", "post-init: " + color1GridFragment);
@@ -64,12 +66,17 @@ public class ColorGridFragment extends Fragment {
                 List<Integer> allColors = new ArrayList<>();
                 allColors.add(dominant);
                 allColors.add(vibrant);
+                allColors.add(muted);
                 allColors.add(vibrantLight);
                 allColors.add(vibrantDark);
-                allColors.add(muted);
                 allColors.add(mutedDark);
 
                 Log.d(TAG, "onGenerated: " + allColors);
+                color1GridFragment.setVisibility(View.VISIBLE);
+                color2GridFragment.setVisibility(View.VISIBLE);
+                color3GridFragment.setVisibility(View.VISIBLE);
+                color4GridFragment.setVisibility(View.VISIBLE);
+                color5GridFragment.setVisibility(View.VISIBLE);
 
                 //creating a set of colors without duplicates and without white
                 for(int color : allColors){
@@ -82,12 +89,37 @@ public class ColorGridFragment extends Fragment {
 
                 //if there are three colors that we can use, set grid colors, if not
                 //just set the middle grid to the dominant color
-                if(colorSet.size() >= 3) {
+                if(colorSet.size() == 5){
                     color1GridFragment.setBackgroundColor(colorSet.get(0));
                     color2GridFragment.setBackgroundColor(colorSet.get(1));
                     color3GridFragment.setBackgroundColor(colorSet.get(2));
-                }else
-                    color2GridFragment.setBackgroundColor(dominant);
+                    color4GridFragment.setBackgroundColor(colorSet.get(3));
+                    color5GridFragment.setBackgroundColor(colorSet.get(4));
+                }else if(colorSet.size() == 4){
+                    color1GridFragment.setBackgroundColor(colorSet.get(0));
+                    color2GridFragment.setBackgroundColor(colorSet.get(1));
+                    color3GridFragment.setVisibility(View.GONE);
+                    color4GridFragment.setBackgroundColor(colorSet.get(2));
+                    color5GridFragment.setBackgroundColor(colorSet.get(3));
+                } else if(colorSet.size() == 3) {
+                    color1GridFragment.setBackgroundColor(colorSet.get(0));
+                    color2GridFragment.setVisibility(View.GONE);
+                    color3GridFragment.setBackgroundColor(colorSet.get(1));
+                    color4GridFragment.setVisibility(View.GONE);
+                    color5GridFragment.setBackgroundColor(colorSet.get(2));
+                }else if(colorSet.size() == 2){
+                    color1GridFragment.setVisibility(View.GONE);
+                    color2GridFragment.setBackgroundColor(colorSet.get(0));
+                    color2GridFragment.setVisibility(View.GONE);
+                    color4GridFragment.setBackgroundColor(colorSet.get(1));
+                    color5GridFragment.setVisibility(View.GONE);
+                }else {
+                    color1GridFragment.setVisibility(View.GONE);
+                    color2GridFragment.setVisibility(View.GONE);
+                    color3GridFragment.setBackgroundColor(colorSet.get(0));
+                    color4GridFragment.setVisibility(View.GONE);
+                    color5GridFragment.setVisibility(View.GONE);
+                }
             }
         });
     }

@@ -241,7 +241,7 @@ public class VisionAPIFragment extends Fragment {
 
                 for(ImageLabel label : labelList){
                     if(label.entityId.equals("Hot dog")){
-                        if(label.confidence > .50){
+                        if(label.confidence > .33){
                             isHotDog = true;
                             break;
                         }

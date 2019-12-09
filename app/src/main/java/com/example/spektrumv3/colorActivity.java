@@ -1,5 +1,7 @@
 package com.example.spektrumv3;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -9,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,14 +23,11 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
-
-
 public class colorActivity extends AppCompatActivity {
     String TAG = "ColorActivity";
 
     private ImageView selectedImage;
-    private Uri selectedImageURI;
-    Switch switchButton;
+    //private Uri selectedImageURI;
     ColorGridFragment colorGridFragment;
     VisionAPIFragment visionAPIFragment;
     Spinner spinner;
@@ -39,21 +39,19 @@ public class colorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color);
 
+        //we want a back button on the action bar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         String uriString = intent.getStringExtra("selectedImageURI");
 
         myURI = Uri.parse(uriString);
-        selectedImageURI = Uri.parse(uriString);
-
         selectedImage = findViewById(R.id.analyzeImageView);
         selectedImage.setImageURI(myURI);
-        Log.d(TAG, "ImageURI: " + myURI);
-        Log.d(TAG, "ImageURI: " + myURI.toString());
 
         initViews();
-        //switchButtonListener();
 
         //we want to use a spinner and add the options to it
         String[] spinnerOptions = {"Colors", "Labels", "Landmarks", "Faces", "Text", "Hot Dog?"};
@@ -114,44 +112,27 @@ public class colorActivity extends AppCompatActivity {
             }
         });
 
-
-        colorGridFragment.paintTextBackground(uriToBitmap(myURI));
-
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 colorGridFragment.paintTextBackground(uriToBitmap(myURI));
             }
         });
         thread.start();
-
     }//end onCreate
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                this.finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     private void initViews() {
         colorGridFragment  = (ColorGridFragment) getSupportFragmentManager().findFragmentById(R.id.colorGridFragment);
         visionAPIFragment  = (VisionAPIFragment) getSupportFragmentManager().findFragmentById(R.id.visionApiFragment);
-    }
-
-    public void switchButtonListener(){
-        switchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if( switchButton.isChecked()) {
-                    FragmentManager fm = getSupportFragmentManager();
-                    fm.beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                            .hide(colorGridFragment).commit();
-
-                    fm.beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                            .show(visionAPIFragment).commit();
-                } else {
-                    FragmentManager fm = getSupportFragmentManager();
-                    fm.beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                            .show(colorGridFragment).commit();
-
-                    fm.beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                            .hide(visionAPIFragment).commit();
-                }
-            }
-        });
     }
 
     private Bitmap uriToBitmap(Uri uri) {
