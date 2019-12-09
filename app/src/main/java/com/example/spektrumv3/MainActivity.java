@@ -24,12 +24,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-// database image deletion
-// color analyze cleanup
-        //
-// once cleaned up potentially add Flickr API functionality of random "interesting" image
-//      or Google API fragment in place of color grid (fragment)
-
 public class MainActivity extends AppCompatActivity {
 
     SqlImageDatabase sqlDb = null;
@@ -56,10 +50,9 @@ public class MainActivity extends AppCompatActivity {
         analyzeButtonListener();
         listButtonListener();
         clearButtonListener();
-
         sqlDb = new SqlImageDatabase(this);
-       selectedImageView = findViewById(R.id.analyzeImageView);
-       imageRecycler = findViewById(R.id.recyclerListView);
+        selectedImageView = findViewById(R.id.analyzeImageView);
+        imageRecycler = findViewById(R.id.recyclerListView);
 
         displayFragment  = (ImageDisplayFragment) getSupportFragmentManager().findFragmentById(R.id.imageDisplayFragment);
         listViewFragment  = (ImageListViewFragment) getSupportFragmentManager().findFragmentById(R.id.listViewFragment);

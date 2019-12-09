@@ -37,12 +37,8 @@ public class ColorGridFragment extends Fragment {
         color3GridFragment = v.findViewById(R.id.fragColorTextView3);
         color4GridFragment = v.findViewById(R.id.fragColorTextView4);
         color5GridFragment = v.findViewById(R.id.fragColorTextView5);
-
-
-        Log.d("colorGridFrag", "post-init: " + color1GridFragment);
         return v;
     }
-
 
     public void paintTextBackground(Bitmap bitmap) {
         Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {

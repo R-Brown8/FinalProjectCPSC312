@@ -8,25 +8,12 @@
     android:background="#ffffff"
     tools:context=".colorActivity">
 
-    <TextView
-        android:id="@+id/titleTextView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center_horizontal"
-        android:text="Title"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/analyzeImageView"
-        android:layout_width="414dp"
-        android:layout_height="271dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="136dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/colorGridFragment"
+        app:layout_constraintBottom_toTopOf="@id/spinnerOptions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,32 +21,20 @@
 
     <Spinner
         android:id="@+id/spinnerOptions"
-        android:layout_width="179dp"
-        android:layout_height="149dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/colorGridFragment"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/analyzeImageView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <fragment
         android:id="@+id/colorGridFragment"
         android:name="com.example.spektrumv3.ColorGridFragment"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/visionApiFragment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/analyzeImageView" />
-
-    <fragment
-        android:id="@+id/visionApiFragment"
-        android:name="com.example.spektrumv3.VisionAPIFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="1dp"
+        android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/colorGridFragment" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
