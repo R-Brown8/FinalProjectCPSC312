@@ -9,6 +9,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,25 +36,44 @@ import com.google.firebase.ml.vision.face.FirebaseVisionFaceLandmark;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class VisionAPIFragment extends Fragment {
+
     List<ImageLabel> labelList;
+    ProgressBar progressBar;
+    TextView textView;
+
     static final String TAG = "APIFragment";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.vision_api, container, false);
+        View view = inflater.inflate(R.layout.vision_api, container, false);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        textView = (TextView) view.findViewById(R.id.infoTextView);
+
+        return view;
     }
 
 
 
     public void updateText(String text){
-        TextView textView = (TextView) getView().findViewById(R.id.infoTextView);
         textView.setText(text);
+        toggleProgressBar(false);
+    }
+
+    public void toggleProgressBar(Boolean showProgress) {
+
+        if (showProgress) {
+            progressBar.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.GONE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+            textView.setVisibility(View.VISIBLE);
+        }
+
     }
 
     public void analyzeImageForLabels(Bitmap bitmap){

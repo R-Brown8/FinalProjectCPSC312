@@ -65,7 +65,7 @@ public class colorActivity extends AppCompatActivity {
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position,  final long id) {
                 FragmentManager fm = getSupportFragmentManager();
                 //hide the colors fragment
                 fm.beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -76,20 +76,26 @@ public class colorActivity extends AppCompatActivity {
                         .show(visionAPIFragment).commit();
 
                 //once the text view is visible, we want to update the text with what the user wants
-                if(id == 0){
-                    FragmentManager frag = getSupportFragmentManager();
-                    frag.beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                            .show(colorGridFragment).commit();
+                visionAPIFragment.toggleProgressBar(true);
+                Thread thread = new Thread(new Runnable() {
+                    public void run() {
+                        if(id == 0) {
+                            FragmentManager frag = getSupportFragmentManager();
+                            frag.beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                                    .show(colorGridFragment).commit();
 
-                    frag.beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                            .hide(visionAPIFragment).commit();
-                }
-                else if(id == 1)
-                    visionAPIFragment.analyzeImageForLabels(uriToBitmap(myURI));
-                else if(id == 2)
-                    visionAPIFragment.analyzeImageForLandmark(uriToBitmap(myURI));
-                else if(id == 3)
-                    visionAPIFragment.analyzeImageForFaces(uriToBitmap(myURI));
+                            frag.beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                                    .hide(visionAPIFragment).commit();
+                        }
+                        else if(id == 1)
+                            visionAPIFragment.analyzeImageForLabels(uriToBitmap(myURI));
+                        else if(id == 2)
+                            visionAPIFragment.analyzeImageForLandmark(uriToBitmap(myURI));
+                        else if(id == 3)
+                            visionAPIFragment.analyzeImageForFaces(uriToBitmap(myURI));
+                    }
+                });
+                thread.start();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -102,7 +108,16 @@ public class colorActivity extends AppCompatActivity {
             }
         });
 
+
         colorGridFragment.paintTextBackground(uriToBitmap(myURI));
+
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                colorGridFragment.paintTextBackground(uriToBitmap(myURI));
+            }
+        });
+        thread.start();
+
     }//end onCreate
 
     private void initViews() {

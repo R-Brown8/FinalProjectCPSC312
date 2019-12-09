@@ -35,8 +35,7 @@ public class ColorGridFragment extends Fragment {
         color1GridFragment = (TextView) v.findViewById(R.id.fragColorTextView1);
         color2GridFragment = (TextView) v.findViewById(R.id.fragColorTextView2);
         color3GridFragment = (TextView) v.findViewById(R.id.fragColorTextView3);
-//        color4GridFragment = (TextView) v.findViewById(R.id.fragColorTextView4);
-//        color5GridFragment = (TextView) v.findViewById(R.id.fragColorTextView5);
+
 
         Log.d("colorGridFrag", "post-init: " + color1GridFragment);
         return v;
