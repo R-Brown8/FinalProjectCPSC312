@@ -13,11 +13,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.palette.graphics.Palette;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class ColorGridFragment extends Fragment {
-
+    static final String TAG = "ColorGridFragment";
 
     TextView color1GridFragment;
     TextView color2GridFragment;
@@ -42,9 +44,6 @@ public class ColorGridFragment extends Fragment {
 
 
     public void paintTextBackground(Bitmap bitmap) {
-
-        Log.d("colorGridFrag", "post-init1: " + color1GridFragment);
-
         Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
             @Override
             public void onGenerated(Palette palette) {
@@ -57,25 +56,39 @@ public class ColorGridFragment extends Fragment {
 
 
                 int dominant = palette.getDominantColor(defaultValue);
-                Log.d("TEST", "" + dominant);
                 int vibrant = palette.getVibrantColor(defaultValue);
                 int vibrantLight = palette.getVibrantColor(defaultValue);
                 int vibrantDark = palette.getDarkVibrantColor(defaultValue);
                 int muted = palette.getMutedColor(defaultValue);
                 int mutedDark = palette.getDarkMutedColor(defaultValue);
 
-                if(color1GridFragment != null) {
-                    color1GridFragment.setBackgroundColor(vibrantLight);
-                    color2GridFragment.setBackgroundColor(dominant);
-                    color3GridFragment.setBackgroundColor(muted);
-//                    color4GridFragment.setBackgroundColor(muted);
-//                    color5GridFragment.setBackgroundColor(mutedDark);
+                List<Integer> colorSet = new ArrayList<>();
+                List<Integer> allColors = new ArrayList<>();
+                allColors.add(dominant);
+                allColors.add(vibrant);
+                allColors.add(vibrantLight);
+                allColors.add(vibrantDark);
+                allColors.add(muted);
+                allColors.add(mutedDark);
+
+                Log.d(TAG, "onGenerated: " + allColors);
+
+                //creating a set of colors without duplicates and without white
+                for(int color : allColors){
+                    if(!colorSet.contains(color) && color != 0){
+                        colorSet.add(color);
+                    }
                 }
-//
+
+                Log.d(TAG, "onGenerated: SET: " + colorSet);
+
+                if(colorSet.size() >= 3) {
+                    color1GridFragment.setBackgroundColor(colorSet.get(1));
+                    color2GridFragment.setBackgroundColor(colorSet.get(2));
+                    color3GridFragment.setBackgroundColor(colorSet.get(3));
+                }
             }
         });
-
-
     }
 
     public static Palette.Swatch getMostPopulousSwatch(Palette palette) {

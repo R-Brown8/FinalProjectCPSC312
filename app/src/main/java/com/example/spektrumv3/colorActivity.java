@@ -102,24 +102,12 @@ public class colorActivity extends AppCompatActivity {
             }
         });
 
-
         colorGridFragment.paintTextBackground(uriToBitmap(myURI));
-
-//        visionAPIFragment.analyzeImageForLabels(uriToBitmap(myURI));
-//        visionAPIFragment.analyzeImageForLandmark(uriToBitmap(myURI));
-//        visionAPIFragment.analyzeImageForFaces(uriToBitmap(myURI));
-
     }//end onCreate
-
-
-
-
-
 
     private void initViews() {
         colorGridFragment  = (ColorGridFragment) getSupportFragmentManager().findFragmentById(R.id.colorGridFragment);
         visionAPIFragment  = (VisionAPIFragment) getSupportFragmentManager().findFragmentById(R.id.visionApiFragment);
-        //switchButton = (Switch) findViewById(R.id.switchButton);
     }
 
     public void switchButtonListener(){

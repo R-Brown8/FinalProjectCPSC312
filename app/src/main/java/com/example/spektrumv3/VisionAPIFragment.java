@@ -110,7 +110,6 @@ public class VisionAPIFragment extends Fragment {
 //
 //        faceDetector.release();
 
-        //TRIAL OF SOMETHING NEW
         FirebaseVisionFaceDetectorOptions highAccuracy = new FirebaseVisionFaceDetectorOptions.Builder()
                 .setPerformanceMode(FirebaseVisionFaceDetectorOptions.ACCURATE)
                 .setLandmarkMode(FirebaseVisionFaceDetectorOptions.ACCURATE)
@@ -125,11 +124,13 @@ public class VisionAPIFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionFace>>() {
                     @Override
                     public void onSuccess(List<FirebaseVisionFace> firebaseVisionFaces) {
-                        Log.d(TAG, "onSuccess: # of faces: " + firebaseVisionFaces.size());
+                        //Log.d(TAG, "onSuccess: # of faces: " + firebaseVisionFaces.size());
                         if(firebaseVisionFaces.size() == 1){
                             updateText("There is: " + firebaseVisionFaces.size() + " face.");
-                        }
-                        updateText("There are: " + firebaseVisionFaces.size() + " faces.");
+                        }else if(firebaseVisionFaces.size() == 0)
+                            updateText("There does not appear to be any faces.");
+                        else
+                            updateText("There are: " + firebaseVisionFaces.size() + " faces.");
                         //image was scanned successfully
                         for(FirebaseVisionFace face : firebaseVisionFaces){
                             Rect bounds = face.getBoundingBox();
