@@ -51,8 +51,8 @@ public class VisionAPIFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.vision_api, container, false);
-        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
-        textView = (TextView) view.findViewById(R.id.infoTextView);
+        progressBar = view.findViewById(R.id.progressBar);
+        textView = view.findViewById(R.id.infoTextView);
 
         return view;
     }

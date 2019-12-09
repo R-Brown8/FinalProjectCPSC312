@@ -30,9 +30,9 @@ public class ColorGridFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.color_grid, container, false);
-        color1GridFragment = (TextView) v.findViewById(R.id.fragColorTextView1);
-        color2GridFragment = (TextView) v.findViewById(R.id.fragColorTextView2);
-        color3GridFragment = (TextView) v.findViewById(R.id.fragColorTextView3);
+        color1GridFragment = v.findViewById(R.id.fragColorTextView1);
+        color2GridFragment = v.findViewById(R.id.fragColorTextView2);
+        color3GridFragment = v.findViewById(R.id.fragColorTextView3);
 
 
         Log.d("colorGridFrag", "post-init: " + color1GridFragment);

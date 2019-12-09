@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
         clearButtonListener();
 
         sqlDb = new SqlImageDatabase(this);
-       selectedImageView = (ImageView) findViewById(R.id.analyzeImageView);
-       imageRecycler = (RecyclerView) findViewById(R.id.recyclerListView);
+       selectedImageView = findViewById(R.id.analyzeImageView);
+       imageRecycler = findViewById(R.id.recyclerListView);
 
         displayFragment  = (ImageDisplayFragment) getSupportFragmentManager().findFragmentById(R.id.imageDisplayFragment);
         listViewFragment  = (ImageListViewFragment) getSupportFragmentManager().findFragmentById(R.id.listViewFragment);
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clearButtonListener() {
-        clearButton = (Button) findViewById(R.id.clearButton);
+        clearButton = findViewById(R.id.clearButton);
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void uploadButtonListener() {
-        uploadButton = (ImageButton) findViewById(R.id.uploadButton);
+        uploadButton = findViewById(R.id.uploadButton);
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void listButtonListener() {
-        listButton = (Button) findViewById(R.id.listButton);
+        listButton = findViewById(R.id.listButton);
         listButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
                     selectedImage = data.getData();
-                    Uri uri = (Uri) data.getData();
+                    Uri uri = data.getData();
                     Log.d(TAG, "newURI: " + selectedImage);
 
                     final Bitmap bitmap = uriToBitmap(data.getData());
@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void analyzeButtonListener(){
-        analyzeButton = (Button) findViewById(R.id.analyzeButton);
+        analyzeButton = findViewById(R.id.analyzeButton);
         analyzeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

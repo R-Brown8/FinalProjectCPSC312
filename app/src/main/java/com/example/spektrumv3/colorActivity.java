@@ -55,7 +55,7 @@ public class colorActivity extends AppCompatActivity {
 
         //we want to use a spinner and add the options to it
         String[] spinnerOptions = {"Colors", "Labels", "Landmarks", "Faces"};
-        spinner = (Spinner) findViewById(R.id.spinnerOptions);
+        spinner = findViewById(R.id.spinnerOptions);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_spinner_dropdown_item,
