@@ -53,7 +53,6 @@ public class ColorGridFragment extends Fragment {
                 Palette.Swatch mostPopularColor = getMostPopulousSwatch(palette);
                 Palette.Swatch dominantColor = palette.getDominantSwatch();
 
-
                 int dominant = palette.getDominantColor(defaultValue);
                 int vibrant = palette.getVibrantColor(defaultValue);
                 int vibrantLight = palette.getVibrantColor(defaultValue);
@@ -81,10 +80,12 @@ public class ColorGridFragment extends Fragment {
 
                 Log.d(TAG, "onGenerated: SET: " + colorSet);
 
+                //if there are three colors that we can use, set grid colors, if not
+                //just set the middle grid to the dominant color
                 if(colorSet.size() >= 3) {
-                    color1GridFragment.setBackgroundColor(colorSet.get(1));
-                    color2GridFragment.setBackgroundColor(colorSet.get(2));
-                    color3GridFragment.setBackgroundColor(colorSet.get(3));
+                    color1GridFragment.setBackgroundColor(colorSet.get(0));
+                    color2GridFragment.setBackgroundColor(colorSet.get(1));
+                    color3GridFragment.setBackgroundColor(colorSet.get(2));
                 }else
                     color2GridFragment.setBackgroundColor(dominant);
             }

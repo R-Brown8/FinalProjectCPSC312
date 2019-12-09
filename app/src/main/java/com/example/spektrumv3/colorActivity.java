@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 
@@ -54,7 +56,7 @@ public class colorActivity extends AppCompatActivity {
         //switchButtonListener();
 
         //we want to use a spinner and add the options to it
-        String[] spinnerOptions = {"Colors", "Labels", "Landmarks", "Faces"};
+        String[] spinnerOptions = {"Colors", "Labels", "Landmarks", "Faces", "Text", "Hot Dog?"};
         spinner = findViewById(R.id.spinnerOptions);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
@@ -93,6 +95,10 @@ public class colorActivity extends AppCompatActivity {
                             visionAPIFragment.analyzeImageForLandmark(uriToBitmap(myURI));
                         else if(id == 3)
                             visionAPIFragment.analyzeImageForFaces(uriToBitmap(myURI));
+                        else if(id == 4)
+                            visionAPIFragment.analyzeImageForText(uriToBitmap(myURI));
+                        else if(id == 5)
+                            visionAPIFragment.analyzeImageForHotDog(uriToBitmap(myURI));
                     }
                 });
                 thread.start();

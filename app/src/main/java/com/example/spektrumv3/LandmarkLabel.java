@@ -16,6 +16,6 @@ public class LandmarkLabel {
     @Override
     public String toString() {
 
-        return entityId + " with " + new DecimalFormat("#0.00%").format(confidence) + " confidence.";
+        return label + " with " + new DecimalFormat("#0.00%").format(confidence) + " confidence.";
     }
 }

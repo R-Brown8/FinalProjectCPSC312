@@ -1,5 +1,6 @@
 package com.example.spektrumv3;
 
+import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -35,18 +36,20 @@ import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceLandmark;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
+import com.google.firebase.ml.vision.text.FirebaseVisionText;
+import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
 
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class VisionAPIFragment extends Fragment {
-
-    List<ImageLabel> labelList;
-    ProgressBar progressBar;
-    TextView textView;
-
+    private List<ImageLabel> labelList;
+    private ProgressBar progressBar;
+    private TextView textView;
     static final String TAG = "APIFragment";
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,15 +60,12 @@ public class VisionAPIFragment extends Fragment {
         return view;
     }
 
-
-
     public void updateText(String text){
         textView.setText(text);
         toggleProgressBar(false);
     }
 
     public void toggleProgressBar(Boolean showProgress) {
-
         if (showProgress) {
             progressBar.setVisibility(View.VISIBLE);
             textView.setVisibility(View.GONE);
@@ -78,7 +78,7 @@ public class VisionAPIFragment extends Fragment {
 
     public void analyzeImageForLabels(Bitmap bitmap){
         labelList = new ArrayList<>();
-
+        labelList.clear();
         FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap);
         FirebaseVisionImageLabeler labeler = FirebaseVision.getInstance().getOnDeviceImageLabeler();
 
@@ -179,16 +179,10 @@ public class VisionAPIFragment extends Fragment {
 
     public void analyzeImageForLandmark(Bitmap bitmap){
         final List<LandmarkLabel> landmarkList = new ArrayList<>();
-        FirebaseVisionCloudDetectorOptions options =
-                new FirebaseVisionCloudDetectorOptions.Builder()
-                        .setModelType(FirebaseVisionCloudDetectorOptions.LATEST_MODEL)
-                        .setMaxResults(15) //we only want one landmark??
-                        .build();
-
         FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bitmap);
 
         FirebaseVisionCloudLandmarkDetector detector = FirebaseVision.getInstance()
-                .getVisionCloudLandmarkDetector(options);
+                .getVisionCloudLandmarkDetector();
 
         Task<List<FirebaseVisionCloudLandmark>> result = detector.detectInImage(image)
                 .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionCloudLandmark>>() {
@@ -203,18 +197,98 @@ public class VisionAPIFragment extends Fragment {
                             landmarkList.add(label);
                         }
                         Log.d(TAG, "onSuccess: landmarks: " + landmarkList);
-                        //System.out.println(landmarkList);
+                        String locationString = "I am " + new DecimalFormat("#0.00%").format(landmarkList.get(0).confidence)
+                                + " confident this is the  \n"
+                                + landmarkList.get(0).label;
+
+                        updateText(locationString);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         //task failed to complete
-                        Log.d(TAG, "onFailure: " + "failed to find a landmark");
+                        updateText("I do not recognize any landmarks.");
                     }
                 });
 
     }
 
+    public void analyzeImageForHotDog(Bitmap bitmap){
+        FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap);
+        final FirebaseVisionImageLabeler labeler = FirebaseVision.getInstance().getOnDeviceImageLabeler();
+
+        labelList = new ArrayList<>();
+        labelList.clear();
+        labeler.processImage(firebaseVisionImage).addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionImageLabel>>() {
+            @Override
+            public void onSuccess(List<FirebaseVisionImageLabel> labels) {
+                for(FirebaseVisionImageLabel label : labels){
+                    String text = label.getText();
+                    String entityId = label.getEntityId();
+                    float confidence = label.getConfidence();
+                    ImageLabel newLabel = new ImageLabel(confidence, entityId, text);
+                    labelList.add(newLabel);
+                }
+
+                boolean isHotDog = false;
+
+                Log.d(TAG, "onSuccess: labelList: " + labelList);
+
+                for(ImageLabel label : labelList){
+                    if(label.entityId.equals("Hot dog")){
+                        if(label.confidence > .50){
+                            isHotDog = true;
+                            break;
+                        }
+                    }
+                }
+
+                if(isHotDog){
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("YAHOO!")
+                            .setMessage("YOU FOUND A HOT DOG! CONGRATULATIONS!")
+                            .setNeutralButton("Heck Yeah", null)
+                            .show();
+
+                    updateText("It appears to be a hot dog.");
+                }else {
+                    updateText("Not a hot dog :(");
+                }
+
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "Failed to analyze image for labels.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void analyzeImageForText(Bitmap bitmap){
+        FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bitmap);
+        FirebaseVisionTextRecognizer detector = FirebaseVision.getInstance().getOnDeviceTextRecognizer();
+        final Task<FirebaseVisionText> result = detector.processImage(image)
+                .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
+                    //successfully sound text
+                    @Override
+                    public void onSuccess(FirebaseVisionText firebaseVisionText) {
+                        String resultText = firebaseVisionText.getText();
+
+                        if(resultText.equals(""))
+                            updateText("I did not find any text.");
+                        else
+                            updateText("Found the text: \n" + resultText);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    //task failed
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //Toast.makeText(getActivity(), "Failed to analyze for text", Toast.LENGTH_SHORT).show();
+                        updateText("Failed to analyze for text");
+                    }
+                });
+    }
 
 
 }
