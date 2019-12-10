@@ -72,7 +72,7 @@ public class colorActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
 
-        // Get the Intent that started this activity and extract the string
+        // Get the Intent that started this activity and extract the URI string
         Intent intent = getIntent();
         String uriString = intent.getStringExtra("selectedImageURI");
 
