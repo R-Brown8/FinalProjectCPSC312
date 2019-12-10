@@ -83,57 +83,69 @@ public class colorActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                 .show(colorGridFragment).commit();
-        colorGridFragment.paintTextBackground(uriToBitmap(myURI));
+        Thread colorThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                colorGridFragment.paintTextBackground(uriToBitmap(myURI));
+            }
+        });
+        colorThread.start();
 
         //we want to use a spinner and add the options to it
         String[] spinnerOptions = {"Colors", "Labels", "Landmarks", "Faces", "Text", "Hot Dog?"};
-        Spinner spinner = findViewById(R.id.spinnerOptions);
+        final Spinner spinner = findViewById(R.id.spinnerOptions);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_spinner_dropdown_item,
                 spinnerOptions);
         spinner.setAdapter(adapter);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position,  final long id) {
-                if(id == 0){
-                    setTextVisible(false);
-                }else if(id == 1) {
-                    setTextVisible(false);
-                    toggleProgressBar(true);
-                    analyzeImageForLabels(uriToBitmap(myURI));
-                    setTextVisible(true);
-                }else if(id == 2) {
-                    setTextVisible(false);
-                    toggleProgressBar(true);
-                    analyzeImageForLandmark(uriToBitmap(myURI));
-                    setTextVisible(true);
-                }else if(id == 3) {
-                    setTextVisible(false);
-                    toggleProgressBar(true);
-                    analyzeImageForFaces(uriToBitmap(myURI));
-                    setTextVisible(true);
-                }else if(id == 4) {
-                    setTextVisible(false);
-                    toggleProgressBar(true);
-                    analyzeImageForText(uriToBitmap(myURI));
-                    setTextVisible(true);
-                }else if(id == 5) {
-                    setTextVisible(false);
-                    toggleProgressBar(true);
-                    analyzeImageForHotDog(uriToBitmap(myURI));
-                    setTextVisible(true);
+        Thread thread = new Thread(new Runnable() {
+                public void run() {
+                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, final long id) {
+                            if (id == 0) {
+                                setTextVisible(false);
+                            } else if (id == 1) {
+                                setTextVisible(false);
+                                toggleProgressBar(true);
+                                analyzeImageForLabels(uriToBitmap(myURI));
+                                setTextVisible(true);
+                            } else if (id == 2) {
+                                setTextVisible(false);
+                                toggleProgressBar(true);
+                                analyzeImageForLandmark(uriToBitmap(myURI));
+                                setTextVisible(true);
+                            } else if (id == 3) {
+                                setTextVisible(false);
+                                toggleProgressBar(true);
+                                analyzeImageForFaces(uriToBitmap(myURI));
+                                setTextVisible(true);
+                            } else if (id == 4) {
+                                setTextVisible(false);
+                                toggleProgressBar(true);
+                                analyzeImageForText(uriToBitmap(myURI));
+                                setTextVisible(true);
+                            } else if (id == 5) {
+                                setTextVisible(false);
+                                toggleProgressBar(true);
+                                analyzeImageForHotDog(uriToBitmap(myURI));
+                                setTextVisible(true);
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            FragmentManager fm = getSupportFragmentManager();
+                            fm.beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                                    .show(colorGridFragment).commit();
+                            setTextVisible(false);
+                        }
+                    });
                 }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                FragmentManager fm = getSupportFragmentManager();
-                fm.beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                        .show(colorGridFragment).commit();
-                setTextVisible(false);
-            }
         });
+        thread.start();
 
     }//end onCreate
 

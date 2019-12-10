@@ -162,9 +162,7 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         public void run() {
                             selectedImageView.setImageBitmap(bitmap);
-
                             updateRecycleView();
-
                             toggleFragments(false);
                         }
                     });
@@ -217,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void setSelectedImage(Uri uri) {
         selectedImage = uri;
-
     }
 
     public void toggleFragments(boolean showList){
