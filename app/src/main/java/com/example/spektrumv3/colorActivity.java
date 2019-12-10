@@ -187,10 +187,8 @@ public class colorActivity extends AppCompatActivity {
     public void toggleProgressBar(Boolean showProgress) {
         if (showProgress) {
             progressBar.setVisibility(View.VISIBLE);
-            textView.setVisibility(View.GONE);
         } else {
             progressBar.setVisibility(View.GONE);
-            textView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -210,7 +208,6 @@ public class colorActivity extends AppCompatActivity {
             color5GridFragment.setVisibility(View.VISIBLE);
             textView.setVisibility(View.GONE);
         }
-
     }
 
     public void analyzeImageForLabels(Bitmap bitmap){
