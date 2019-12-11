@@ -67,7 +67,6 @@ public class ColorGridFragment extends Fragment {
                 allColors.add(vibrantDark);
                 allColors.add(mutedDark);
 
-                Log.d(TAG, "onGenerated: " + allColors);
                 color1GridFragment.setVisibility(View.VISIBLE);
                 color2GridFragment.setVisibility(View.VISIBLE);
                 color3GridFragment.setVisibility(View.VISIBLE);

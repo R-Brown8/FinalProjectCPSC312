@@ -109,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //code for selecting image
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT,
-                        MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                Intent intent = new Intent(Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
                 startActivityForResult(intent, RESULT_LOAD_IMAGE);
             }
