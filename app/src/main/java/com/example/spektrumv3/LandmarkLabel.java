@@ -6,12 +6,23 @@ public class LandmarkLabel {
     float confidence;
     String label;
     String entityId;
+    double latitude;
+    double longitude;
 
     public LandmarkLabel(float confidence, String label, String entityId) {
         this.confidence = confidence;
         this.label = label;
         this.entityId = entityId;
     }
+
+    public LandmarkLabel(float confidence, String label, String entityId, double lat, double longitude) {
+        this.confidence = confidence;
+        this.label = label;
+        this.entityId = entityId;
+        this.latitude = lat;
+        this.longitude = longitude;
+    }
+
 
     @Override
     public String toString() {

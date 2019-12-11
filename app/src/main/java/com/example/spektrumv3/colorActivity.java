@@ -31,6 +31,7 @@ import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.cloud.landmark.FirebaseVisionCloudLandmark;
 import com.google.firebase.ml.vision.cloud.landmark.FirebaseVisionCloudLandmarkDetector;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.common.FirebaseVisionLatLng;
 import com.google.firebase.ml.vision.common.FirebaseVisionPoint;
 import com.google.firebase.ml.vision.face.FirebaseVisionFace;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
@@ -110,13 +111,11 @@ public class colorActivity extends AppCompatActivity {
                             } else if (id == 1) {
                                 toggleProgressBar(true);
                                 setTextVisible(false);
-                                //toggleProgressBar(true);
                                 analyzeImageForLabels(uriToBitmap(myURI));
                                 setTextVisible(true);
                             } else if (id == 2) {
                                 toggleProgressBar(true);
                                 setTextVisible(false);
-                                //toggleProgressBar(true);
                                 analyzeImageForLandmark(uriToBitmap(myURI));
                                 setTextVisible(true);
                             } else if (id == 3) {
@@ -311,19 +310,34 @@ public class colorActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(List<FirebaseVisionCloudLandmark> firebaseVisionCloudLandmarks) {
                         //task completed successfully
+                        double latitude = 0.0;
+                        double longitude = 0.0;
                         for(FirebaseVisionCloudLandmark landmark : firebaseVisionCloudLandmarks){
                             String name = landmark.getLandmark();
                             String id = landmark.getEntityId();
                             float confidence = landmark.getConfidence();
-                            LandmarkLabel label = new LandmarkLabel(confidence, name, id);
+
+                            for(FirebaseVisionLatLng loc : landmark.getLocations()){
+                                latitude = loc.getLatitude();
+                                longitude = loc.getLongitude();
+                            }
+
+
+                            LandmarkLabel label;
+                            label = new LandmarkLabel(confidence, name, id, latitude, longitude);
                             landmarkList.add(label);
                         }
-                        Log.d(TAG, "onSuccess: landmarks: " + landmarkList);
-                        String landmarkString = "";
+
+
+                        String landmarkString;
                         if(!landmarkList.isEmpty()) {
                             landmarkString = "I am " + new DecimalFormat("#0.00%").format(landmarkList.get(0).confidence)
                                     + " confident this is the  \n"
                                     + landmarkList.get(0).label;
+                            if(landmarkList.get(0).latitude != 0.0){
+                                landmarkString += " \n (" + landmarkList.get(0).latitude + ", " + landmarkList.get(0).longitude + ")";
+                            }
+
                         }else{
                             landmarkString = "I do not recognize this landmark.";
                         }
