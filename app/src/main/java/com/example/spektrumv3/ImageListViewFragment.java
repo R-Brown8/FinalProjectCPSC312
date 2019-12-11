@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ImageListViewFragment extends Fragment {
 
-    RecyclerView recyclerView;
-    TextView emptyTextView;
+    private RecyclerView recyclerView;
+    private TextView emptyTextView;
 
     @Nullable
     @Override
