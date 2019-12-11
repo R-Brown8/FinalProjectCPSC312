@@ -109,13 +109,13 @@ public class colorActivity extends AppCompatActivity {
                             if (id == 0) {
                                 setTextVisible(false);
                             } else if (id == 1) {
-                                toggleProgressBar(true);
                                 setTextVisible(false);
+                                toggleProgressBar(true);
                                 analyzeImageForLabels(uriToBitmap(myURI));
                                 setTextVisible(true);
                             } else if (id == 2) {
-                                toggleProgressBar(true);
                                 setTextVisible(false);
+                                toggleProgressBar(true);
                                 analyzeImageForLandmark(uriToBitmap(myURI));
                                 setTextVisible(true);
                             } else if (id == 3) {
@@ -141,6 +141,7 @@ public class colorActivity extends AppCompatActivity {
                             FragmentManager fm = getSupportFragmentManager();
                             fm.beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                                     .show(colorGridFragment).commit();
+                            colorGridFragment.paintTextBackground(uriToBitmap(myURI));
                             setTextVisible(false);
                         }
                     });
@@ -272,28 +273,11 @@ public class colorActivity extends AppCompatActivity {
                                     updateText("There does not appear to be any faces.");
                                 else
                                     updateText("There are: " + firebaseVisionFaces.size() + " faces.");
-                                //image was scanned successfully
-                                for(FirebaseVisionFace face : firebaseVisionFaces){
-                                    Rect bounds = face.getBoundingBox();
-                                    float rotY = face.getHeadEulerAngleY();
-                                    float rotZ = face.getHeadEulerAngleZ();
-
-                                    FirebaseVisionFaceLandmark leftEye = face.getLandmark(FirebaseVisionFaceLandmark.LEFT_EYE);
-                                    if(leftEye != null){
-                                        FirebaseVisionPoint leftEyePosition = leftEye.getPosition();
-                                    }
-
-                                    FirebaseVisionFaceLandmark rightEye = face.getLandmark(FirebaseVisionFaceLandmark.RIGHT_EYE);
-                                    if(rightEye != null){
-                                        FirebaseVisionPoint rightEyePosition = rightEye.getPosition();
-                                    }
-
-                                }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
+                        updateText("Failed to analyze for faces. Sorry");
                     }
                 });
     }
@@ -322,12 +306,10 @@ public class colorActivity extends AppCompatActivity {
                                 longitude = loc.getLongitude();
                             }
 
-
                             LandmarkLabel label;
                             label = new LandmarkLabel(confidence, name, id, latitude, longitude);
                             landmarkList.add(label);
                         }
-
 
                         String landmarkString;
                         if(!landmarkList.isEmpty()) {
