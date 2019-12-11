@@ -108,13 +108,15 @@ public class colorActivity extends AppCompatActivity {
                             if (id == 0) {
                                 setTextVisible(false);
                             } else if (id == 1) {
-                                setTextVisible(false);
                                 toggleProgressBar(true);
+                                setTextVisible(false);
+                                //toggleProgressBar(true);
                                 analyzeImageForLabels(uriToBitmap(myURI));
                                 setTextVisible(true);
                             } else if (id == 2) {
-                                setTextVisible(false);
                                 toggleProgressBar(true);
+                                setTextVisible(false);
+                                //toggleProgressBar(true);
                                 analyzeImageForLandmark(uriToBitmap(myURI));
                                 setTextVisible(true);
                             } else if (id == 3) {
@@ -146,7 +148,6 @@ public class colorActivity extends AppCompatActivity {
                 }
         });
         thread.start();
-
     }//end onCreate
 
     @Override

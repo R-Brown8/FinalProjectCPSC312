@@ -27,6 +27,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     SqlImageDatabase sqlDb = null;
+    public static final int RESULT_LOAD_IMAGE = 1;
 
     ImageButton uploadButton;
     Button listButton;
@@ -111,8 +112,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT,
                         MediaStore.Images.Media.INTERNAL_CONTENT_URI);
 
-                Log.d(TAG, "uploadbuttonListener: ");
-
                 startActivityForResult(intent, RESULT_LOAD_IMAGE);
             }
         });
@@ -124,13 +123,6 @@ public class MainActivity extends AppCompatActivity {
         listButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Log.d(TAG, "listButtonListener: ");
-
-                Toast toast = Toast.makeText(MainActivity.this, "Showing saved images list", Toast.LENGTH_LONG );
-                toast.setGravity(Gravity.CENTER|Gravity.BOTTOM, 0, 325);
-                toast.show();
-
                 analyzeButton.setEnabled(false);
 
                 toggleFragments(true);
@@ -138,25 +130,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-    public static final int RESULT_LOAD_IMAGE = 1;
-
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-
-        Log.d(TAG, "onActivityResult: before if statement");
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
                     selectedImage = data.getData();
                     Uri uri = data.getData();
-                    Log.d(TAG, "newURI: " + selectedImage);
 
                     final Bitmap bitmap = uriToBitmap(data.getData());
-
-
                     sqlDb.insertImage(uri.toString());
 
                     runOnUiThread(new Runnable() {
@@ -205,7 +189,6 @@ public class MainActivity extends AppCompatActivity {
             do {
                 String data = c.getString(c.getColumnIndex("uri"));
                 list.add(data);
-                Log.d(TAG, "data received: " + data);
             } while (c.moveToNext());
         }
         c.close(); //always close cursor
