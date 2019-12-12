@@ -107,7 +107,8 @@ public class colorActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, final long id) {
                             if (id == 0) {
-                                setTextVisible(false);
+                                textView.setVisibility(View.GONE);
+                                colorGridFragment.paintTextBackground(uriToBitmap(myURI));
                             } else if (id == 1) {
                                 setTextVisible(false);
                                 toggleProgressBar(true);
